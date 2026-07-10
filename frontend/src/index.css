@@ -1,0 +1,85 @@
+/* ── Google Font ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ── Design Tokens ── */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-bg: #0f0f13;
+  --color-surface: #1a1a24;
+  --color-surface-hover: #22222e;
+  --color-border: #2a2a3a;
+  --color-text: #e8e8ed;
+  --color-text-muted: #8888a0;
+  --color-primary: #6c5ce7;
+  --color-primary-hover: #7d6ff0;
+  --color-accent: #00cec9;
+  --color-success: #00b894;
+  --color-error: #ff6b6b;
+  --color-warning: #feca57;
+}
+
+/* ── Base ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Flashcard Flip Animation ── */
+.perspective {
+  perspective: 1000px;
+}
+
+.card-inner {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* ── Smooth transitions for interactive elements ── */
+button, a, input, textarea {
+  transition: all 0.2s ease;
+}
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
