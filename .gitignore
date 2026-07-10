@@ -11,6 +11,10 @@ dist
 dist-ssr
 build
 
+# docs
+*.docx
+TAILWIND_NOTES.md
+
 # Logs
 logs
 *.log
