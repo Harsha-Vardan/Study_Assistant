@@ -1,5 +1,6 @@
 # Study Assistant
 
+**Live Demo:** [https://study-assistant-m0zc.onrender.com/](https://study-assistant-m0zc.onrender.com/)
 A modern, robust web application that transforms unstructured notes into interactive flashcards and quizzes using AI.
 
 Built for the **Flam Frontend Internship Assignment**.
