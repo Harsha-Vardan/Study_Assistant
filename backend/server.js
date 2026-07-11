@@ -26,7 +26,8 @@ app.get("/api/health", (req, res) => {
 // This allows you to host both backend and frontend on a single server (e.g. Render)
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.get("*", (req, res) => {
+// Fallback for React Router (using Regex to avoid Express 5 path-to-regexp wildcard issues)
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
