@@ -33,33 +33,49 @@ export default function FlashcardDeck({ flashcards }) {
   const card = flashcards[currentIndex];
 
   return (
-    <div className="space-y-4">
-      <div className="flex-between text-muted">
-        <span>Flashcards</span>
-        <span>{currentIndex + 1} / {flashcards.length}</span>
+    <div className="space-y-6">
+      
+      {/* Progress & Counter */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs font-medium text-zinc-500">
+          <span className="uppercase tracking-wider">Flashcards</span>
+          <span>{currentIndex + 1} of {flashcards.length}</span>
+        </div>
+        <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-zinc-400 transition-all duration-300 ease-out rounded-full"
+            style={{ width: `${((currentIndex + 1) / flashcards.length) * 100}%` }}
+          />
+        </div>
       </div>
 
-      <div className="progress-bg">
-        <div
-          className="progress-fill"
-          style={{ width: `${((currentIndex + 1) / flashcards.length) * 100}%` }}
-        />
+      {/* The Card */}
+      <div className="relative">
+        <Flashcard key={card.id} front={card.front} back={card.back} />
       </div>
 
-      <Flashcard key={card.id} front={card.front} back={card.back} />
-
-      <div className="flex gap-2">
-        <button onClick={goPrev} disabled={currentIndex === 0} className="btn-secondary">
-          ← Prev
+      {/* Controls */}
+      <div className="flex items-center gap-3">
+        <button 
+          onClick={goPrev} 
+          disabled={currentIndex === 0}
+          className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-900 text-zinc-200 disabled:text-zinc-600 rounded-xl text-sm font-medium transition-colors disabled:cursor-not-allowed"
+        >
+          &larr; Previous
         </button>
-        <button onClick={goNext} disabled={currentIndex === flashcards.length - 1} className="btn-secondary">
-          Next →
+        <button 
+          onClick={goNext} 
+          disabled={currentIndex === flashcards.length - 1}
+          className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-900 text-zinc-200 disabled:text-zinc-600 rounded-xl text-sm font-medium transition-colors disabled:cursor-not-allowed"
+        >
+          Next &rarr;
         </button>
       </div>
 
-      <p className="text-muted text-center">
-        ↑ ↓ ← → to navigate
+      <p className="text-center text-xs text-zinc-500 font-medium">
+        Use arrow keys (&larr; &rarr;) to navigate
       </p>
+
     </div>
   );
 }

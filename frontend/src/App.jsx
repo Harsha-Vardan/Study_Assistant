@@ -38,31 +38,40 @@ function App() {
   }, []);
 
   return (
-    <div className="app-layout">
-      <div className="main-container">
-        <header className="mb-10">
-          <h1 className="title-main">Study Assistant</h1>
-          <p className="subtitle-main">
-            Paste your notes, get flashcards & quizzes instantly
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 selection:bg-blue-500/30">
+      <div className="max-w-2xl mx-auto px-5 py-12 sm:py-20">
+        
+        {/* Header */}
+        <header className="text-center mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-100">
+            Study Assistant
+          </h1>
+          <p className="mt-3 text-sm sm:text-base text-zinc-400">
+            Paste your notes, get flashcards & quizzes instantly.
           </p>
         </header>
 
+        {/* Input area */}
         <InputForm
           onGenerate={handleGenerate}
           isLoading={status === 'loading'}
         />
 
-        {status === 'loading' && <LoadingState />}
+        {/* Dynamic States */}
+        <div className="mt-8 transition-all duration-300 ease-in-out">
+          {status === 'loading' && <LoadingState />}
+          
+          {status === 'error' && (
+            <ErrorState message={errorMessage} onRetry={handleRetry} />
+          )}
 
-        {status === 'error' && (
-          <ErrorState message={errorMessage} onRetry={handleRetry} />
-        )}
+          {status === 'idle' && !studySet && <EmptyState />}
 
-        {status === 'idle' && !studySet && <EmptyState />}
+          {status === 'success' && studySet && (
+            <StudySetView key={studySet.topic} studySet={studySet} />
+          )}
+        </div>
 
-        {status === 'success' && studySet && (
-          <StudySetView key={studySet.topic} studySet={studySet} />
-        )}
       </div>
     </div>
   );

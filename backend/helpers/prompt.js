@@ -36,7 +36,7 @@ ${STUDY_SET_SCHEMA}
 
 Rules:
 - Generate 5-8 flashcards covering the key concepts
-- Generate 4-6 quiz questions testing understanding
+- Generate 8-10 quiz questions testing understanding
 - Each quiz question MUST have exactly 4 options
 - correctIndex MUST be a number from 0 to 3
 - Every id must be unique within its array
