@@ -1,13 +1,19 @@
 const Groq = require("groq-sdk");
 const { buildSystemPrompt, buildUserPrompt, buildRepairPrompt } = require("./prompt");
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+// Initialize with a dummy key if missing so the server doesn't crash on startup.
+// We will catch the missing key in the route handler.
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "MISSING_KEY" });
 const MODEL = "llama-3.3-70b-versatile";
 
 /**
  * Calls Groq chat completions and returns the raw text content.
  */
 async function callGroq(systemPrompt, userPrompt) {
+  if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY === "MISSING_KEY") {
+    throw new Error("GROQ_API_KEY environment variable is missing on the server.");
+  }
+
   const response = await groq.chat.completions.create({
     model: MODEL,
     messages: [
