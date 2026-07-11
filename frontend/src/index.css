@@ -3,15 +3,12 @@
 
 @import "tailwindcss";
 
-/* ── Base Theme Setup (Dark Mode Default) ── */
-:root {
-  color-scheme: dark;
-}
+/* Override default dark mode media query to use the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* ── Base Theme Setup ── */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #09090b; /* zinc-950 */
-  color: #fafafa; /* zinc-50 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,35 +21,117 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a; /* zinc-800 */
-  border-radius: 3px;
+  @apply bg-zinc-300 dark:bg-zinc-800 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b; /* zinc-600 */
+  @apply bg-zinc-400 dark:bg-zinc-600;
+}
+
+/* ── Semantic Components ── */
+@layer components {
+  /* Layout */
+  .app-container {
+    @apply min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 selection:bg-blue-500/30 transition-colors duration-300;
+  }
+  .main-wrapper {
+    @apply max-w-2xl mx-auto px-5 py-12 sm:py-20 relative;
+  }
+
+  /* Typography */
+  .heading-primary {
+    @apply text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100;
+  }
+  .text-muted {
+    @apply text-sm text-zinc-500 dark:text-zinc-400;
+  }
+
+  /* Cards & Containers */
+  .card-container {
+    @apply bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800/60 rounded-2xl p-4 sm:p-6 shadow-sm;
+  }
+  .empty-state-box {
+    @apply py-12 px-6 bg-white dark:bg-transparent border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl text-center shadow-sm dark:shadow-none;
+  }
+
+  /* Inputs */
+  .input-field {
+    @apply w-full p-4 pb-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 resize-none text-sm leading-relaxed shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply w-full mt-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 font-semibold py-3 px-4 rounded-xl shadow-sm transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 flex items-center justify-center gap-2;
+  }
+  .btn-secondary {
+    @apply flex-1 py-3 px-4 bg-zinc-100 hover:bg-zinc-200 disabled:bg-zinc-50 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:disabled:bg-zinc-900 text-zinc-900 disabled:text-zinc-400 dark:text-zinc-200 dark:disabled:text-zinc-600 rounded-xl text-sm font-medium transition-colors disabled:cursor-not-allowed border border-transparent disabled:border-zinc-200 dark:disabled:border-transparent;
+  }
+  .btn-blue {
+    @apply flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-500 disabled:bg-zinc-100 dark:disabled:bg-zinc-800 text-white disabled:text-zinc-400 dark:disabled:text-zinc-500 rounded-xl text-sm font-semibold transition-colors disabled:cursor-not-allowed;
+  }
+  .btn-theme-toggle {
+    @apply p-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 transition-colors cursor-pointer active:scale-95;
+  }
+
+  /* Tabs */
+  .tabs-wrapper {
+    @apply flex p-1 bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-xl;
+  }
+  .tab-btn {
+    @apply flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50;
+  }
+  .tab-btn.active {
+    @apply bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm;
+  }
+  
+  /* Quiz Options */
+  .quiz-option {
+    @apply w-full p-4 rounded-xl text-left text-sm transition-all duration-200 border cursor-pointer bg-white dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800/80 text-zinc-600 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 shadow-sm;
+  }
+  .quiz-option.selected {
+    @apply bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-zinc-100 shadow-sm;
+  }
+  .quiz-option.correct {
+    @apply bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-400;
+  }
+  .quiz-option.incorrect {
+    @apply bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400;
+  }
+  .quiz-option.disabled {
+    @apply bg-zinc-50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800/50 text-zinc-400 dark:text-zinc-500 opacity-60 hover:border-zinc-200 dark:hover:border-zinc-800/50 hover:bg-zinc-50 dark:hover:bg-zinc-900/30 cursor-not-allowed;
+  }
+
+  .quiz-icon {
+    @apply flex-shrink-0 w-6 h-6 rounded flex items-center justify-center text-[11px] font-bold mt-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400;
+  }
+  .quiz-icon.selected {
+    @apply bg-zinc-800 dark:bg-zinc-700 text-white dark:text-zinc-200;
+  }
+  .quiz-icon.correct {
+    @apply bg-emerald-200 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-400;
+  }
+  .quiz-icon.incorrect {
+    @apply bg-red-200 dark:bg-red-900/60 text-red-800 dark:text-red-400;
+  }
 }
 
 /* ── Flashcard 3D Flip ── */
 .perspective {
   perspective: 1000px;
 }
-
 .card-inner {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
   position: relative;
 }
-
 .card-inner.flipped {
   transform: rotateY(180deg);
 }
-
 .card-face {
   backface-visibility: hidden;
   position: absolute;
   inset: 0;
   -webkit-backface-visibility: hidden;
 }
-
 .card-back {
   transform: rotateY(180deg);
 }

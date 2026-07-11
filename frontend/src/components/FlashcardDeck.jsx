@@ -41,9 +41,9 @@ export default function FlashcardDeck({ flashcards }) {
           <span className="uppercase tracking-wider">Flashcards</span>
           <span>{currentIndex + 1} of {flashcards.length}</span>
         </div>
-        <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
           <div
-            className="h-full bg-zinc-400 transition-all duration-300 ease-out rounded-full"
+            className="h-full bg-zinc-500 dark:bg-zinc-400 transition-all duration-300 ease-out rounded-full"
             style={{ width: `${((currentIndex + 1) / flashcards.length) * 100}%` }}
           />
         </div>
@@ -59,14 +59,14 @@ export default function FlashcardDeck({ flashcards }) {
         <button 
           onClick={goPrev} 
           disabled={currentIndex === 0}
-          className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-900 text-zinc-200 disabled:text-zinc-600 rounded-xl text-sm font-medium transition-colors disabled:cursor-not-allowed"
+          className="btn-secondary"
         >
           &larr; Previous
         </button>
         <button 
           onClick={goNext} 
           disabled={currentIndex === flashcards.length - 1}
-          className="flex-1 py-3 px-4 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-900 text-zinc-200 disabled:text-zinc-600 rounded-xl text-sm font-medium transition-colors disabled:cursor-not-allowed"
+          className="btn-secondary"
         >
           Next &rarr;
         </button>

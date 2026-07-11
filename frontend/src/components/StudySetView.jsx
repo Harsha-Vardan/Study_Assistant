@@ -23,31 +23,23 @@ export default function StudySetView({ studySet }) {
       
       {/* Topic Header */}
       <div className="text-center sm:text-left mt-2">
-        <h2 className="text-xl font-semibold text-zinc-100">{studySet.topic}</h2>
-        <p className="text-sm text-zinc-400 mt-1">
+        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{studySet.topic}</h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
           {studySet.flashcards.length} flashcards &middot; {studySet.quiz.length} questions
         </p>
       </div>
 
       {/* Segmented Control (Tabs) */}
-      <div className="flex p-1 bg-zinc-900/80 border border-zinc-800 rounded-xl">
+      <div className="tabs-wrapper">
         <button
           onClick={() => setActiveTab('flashcards')}
-          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-            activeTab === 'flashcards'
-              ? 'bg-zinc-800 text-zinc-100 shadow-sm'
-              : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-          }`}
+          className={`tab-btn ${activeTab === 'flashcards' ? 'active' : ''}`}
         >
           Flashcards
         </button>
         <button
           onClick={() => setActiveTab('quiz')}
-          className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-            activeTab === 'quiz'
-              ? 'bg-zinc-800 text-zinc-100 shadow-sm'
-              : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-          }`}
+          className={`tab-btn ${activeTab === 'quiz' ? 'active' : ''}`}
         >
           Quiz
         </button>
@@ -55,13 +47,13 @@ export default function StudySetView({ studySet }) {
 
       {/* Retest indicator banner */}
       {isRetesting && activeTab === 'quiz' && (
-        <div className="flex items-center justify-between p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm">
-          <span className="text-blue-400 font-medium">
+        <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 rounded-xl text-sm">
+          <span className="text-blue-700 dark:text-blue-400 font-medium">
             Retesting {quizQuestions.length} missed question{quizQuestions.length > 1 ? 's' : ''}
           </span>
           <button 
             onClick={handleResetQuiz} 
-            className="text-zinc-400 hover:text-zinc-200 underline underline-offset-2 transition-colors"
+            className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 underline underline-offset-2 transition-colors"
           >
             Reset Full Quiz
           </button>
@@ -69,7 +61,7 @@ export default function StudySetView({ studySet }) {
       )}
 
       {/* Content Area */}
-      <div className="bg-zinc-900/30 border border-zinc-800/60 rounded-2xl p-4 sm:p-6 shadow-sm">
+      <div className="card-container">
         {activeTab === 'flashcards' && (
           <FlashcardDeck flashcards={studySet.flashcards} />
         )}

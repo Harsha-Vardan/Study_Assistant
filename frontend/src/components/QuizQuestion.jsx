@@ -1,39 +1,36 @@
 export default function QuizQuestion({ question, options, selectedIndex, correctIndex, isSubmitted, onSelect }) {
   
-  function getOptionStyles(index) {
-    if (!isSubmitted) {
-      if (selectedIndex === index) {
-        return "bg-zinc-800 border-zinc-600 text-zinc-100";
-      }
-      return "bg-zinc-900/50 border-zinc-800/80 text-zinc-300 hover:border-zinc-600 hover:bg-zinc-800/50";
-    }
-
-    if (index === correctIndex) {
-      return "bg-emerald-950/30 border-emerald-900/50 text-emerald-400";
-    }
+  function getOptionClass(index) {
+    let classes = "quiz-option";
     
-    if (selectedIndex === index && index !== correctIndex) {
-      return "bg-red-950/30 border-red-900/50 text-red-400";
+    if (!isSubmitted) {
+      if (selectedIndex === index) return classes + " selected";
+      return classes;
     }
 
-    return "bg-zinc-900/30 border-zinc-800/50 text-zinc-500 opacity-60";
+    if (index === correctIndex) return classes + " correct";
+    if (selectedIndex === index && index !== correctIndex) return classes + " incorrect";
+    return classes + " disabled";
   }
 
-  function getIconStyles(index) {
+  function getIconClass(index) {
+    let classes = "quiz-icon";
+    
     if (!isSubmitted) {
-      if (selectedIndex === index) return "bg-zinc-700 text-zinc-200";
-      return "bg-zinc-800 text-zinc-400";
+      if (selectedIndex === index) return classes + " selected";
+      return classes;
     }
-    if (index === correctIndex) return "bg-emerald-900/60 text-emerald-400";
-    if (selectedIndex === index && index !== correctIndex) return "bg-red-900/60 text-red-400";
-    return "bg-zinc-800 text-zinc-600";
+    
+    if (index === correctIndex) return classes + " correct";
+    if (selectedIndex === index && index !== correctIndex) return classes + " incorrect";
+    return classes;
   }
 
   const labels = ['A', 'B', 'C', 'D'];
 
   return (
     <div className="space-y-4">
-      <h3 className="text-base sm:text-lg font-medium text-zinc-100 leading-relaxed">
+      <h3 className="text-base sm:text-lg font-medium text-zinc-900 dark:text-zinc-100 leading-relaxed">
         {question}
       </h3>
       
@@ -43,10 +40,10 @@ export default function QuizQuestion({ question, options, selectedIndex, correct
             key={index}
             onClick={() => !isSubmitted && onSelect(index)}
             disabled={isSubmitted}
-            className={`w-full p-4 rounded-xl text-left text-sm transition-all duration-200 border cursor-pointer ${getOptionStyles(index)}`}
+            className={getOptionClass(index)}
           >
             <div className="flex items-start gap-3">
-              <span className={`flex-shrink-0 w-6 h-6 rounded flex items-center justify-center text-[11px] font-bold mt-0.5 ${getIconStyles(index)}`}>
+              <span className={getIconClass(index)}>
                 {isSubmitted && index === correctIndex ? '✓'
                   : isSubmitted && selectedIndex === index && index !== correctIndex ? '✗'
                   : labels[index]}

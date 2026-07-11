@@ -5,6 +5,7 @@ import LoadingState from './components/LoadingState';
 import ErrorState from './components/ErrorState';
 import EmptyState from './components/EmptyState';
 import StudySetView from './components/StudySetView';
+import ThemeToggle from './components/ThemeToggle';
 
 function App() {
   const [status, setStatus] = useState('idle');
@@ -38,15 +39,20 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 selection:bg-blue-500/30">
-      <div className="max-w-2xl mx-auto px-5 py-12 sm:py-20">
+    <div className="app-container">
+      <div className="main-wrapper">
+        
+        {/* Theme Toggle */}
+        <div className="absolute top-6 right-5 sm:top-10 sm:right-6">
+          <ThemeToggle />
+        </div>
         
         {/* Header */}
         <header className="text-center mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-100">
+          <h1 className="heading-primary">
             Study Assistant
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-zinc-400">
+          <p className="mt-3 text-muted sm:text-base">
             Paste your notes, get flashcards & quizzes instantly.
           </p>
         </header>
