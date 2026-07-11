@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const { validateInput } = require("./middleware/validateInput");
 const { errorHandler } = require("./middleware/errorHandler");
@@ -14,14 +15,22 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// ── Routes ──
+// ── API Routes ──
 app.post("/api/generate", validateInput, generateStudySet);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// ── Error Handler (must be after routes) ──
+// ── Serve Frontend in Production ──
+// This allows you to host both backend and frontend on a single server (e.g. Render)
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
+
+// ── Error Handler (must be after API routes) ──
 app.use(errorHandler);
 
 // ── Start ──
